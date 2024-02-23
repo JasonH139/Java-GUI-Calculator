@@ -1,9 +1,10 @@
-package solution;
-
 import java.awt.BorderLayout;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.URL;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -13,18 +14,23 @@ import javax.swing.SwingConstants;
 
 public class Calculator2 extends JFrame
 {
-    private JFrame calculatorFrame;
+	
+	URL iconUrl = getClass().getResource("/calc.png");
+	ImageIcon icon = new ImageIcon(iconUrl);
+    
+	private JFrame calculatorFrame;
     
     public Calculator2()
     {
         
         calculatorFrame = new JFrame();
         calculatorFrame.setLocation(100,100);
-        calculatorFrame.setSize(320,130);
+        calculatorFrame.setSize(520,130);
         calculatorFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         calculatorFrame.setTitle("GUI Calculator");
         
         initializeComponents();
+        calculatorFrame.setIconImage(icon.getImage());
         
         calculatorFrame.setVisible(true);
         
@@ -50,7 +56,7 @@ public class Calculator2 extends JFrame
         calculateButton.setName("calculateButton");
         
         JPanel resultPanel = new JPanel();
-        JLabel resultLabel = new JLabel("  Result");
+        JLabel resultLabel = new JLabel("Result =");
         resultLabel.setName("resultLabel");
         
         JPanel textPanel = new JPanel();
@@ -65,9 +71,12 @@ public class Calculator2 extends JFrame
         
         resultPanel.add(resultLabel);
         
+        infixExpression.setHorizontalAlignment(JTextField.CENTER);
+        infixExpression.setFont(new Font("Serif",Font.CENTER_BASELINE,20));
+        resultLabel.setFont(new Font("Serif",Font.CENTER_BASELINE,20));
         
         calculatorFrame.add(textPanel,BorderLayout.PAGE_START);
-        calculatorFrame.add(resultPanel,BorderLayout.LINE_START);
+        calculatorFrame.add(resultPanel,BorderLayout.CENTER);
         calculatorFrame.add(buttonPanel,BorderLayout.PAGE_END);
         
         
@@ -80,13 +89,13 @@ public class Calculator2 extends JFrame
                     temp = answer.toPostfix(infixExpression.getText());
                     if(answer.evaluate(temp) == -9999)
                     {
-                        resultLabel.setText("  Result = error");
+                        resultLabel.setText("Result = error");
                     }
                     else
-                    resultLabel.setText("  Result = " + answer.evaluate(temp));
+                    resultLabel.setText("Result = " + answer.evaluate(temp));
                 }
                 catch(Exception e1) {
-                    resultLabel.setText("  Result = Error");
+                    resultLabel.setText("Result = Error");
                     resultLabel.setName("Error");
                 }
             }
@@ -96,7 +105,7 @@ public class Calculator2 extends JFrame
         clearButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                     infixExpression.setText("");
-                    resultLabel.setText("  Result");
+                    resultLabel.setText("Result =");
                 }
         });
     }
